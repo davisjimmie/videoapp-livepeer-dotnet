@@ -1,0 +1,43 @@
+﻿@page "/"
+@using LivepeerTest.Infrastructure.Services.Livepeer
+@inject LivepeerStartStream LivepeerStartStream
+
+<PageTitle>Index</PageTitle>
+
+<h1>Livepeer Stream - 1.0</h1>
+
+<br />
+<hr />
+<br />
+
+<iframe src="@playbackUrl" frameborder="0" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" sandbox="allow-same-origin allow-scripts"></iframe>
+
+<br />
+<br />
+
+<strong>Add this key to your streaming software.</strong>
+<br />
+<p>Example: OBS Studio, YouTube, Twitch</p>
+
+<h3>Stream Key: @streamKey </h3>
+
+<button type="button" @onclick="StartAsync">Start Stream</button>
+
+<br />
+<iframe src="https://quizlet.com/989714100/flashcards/embed?i=4vpt2j&x=1jj1" height="500" width="100%" style="border:0"></iframe>
+@code {
+    private List<string> Settings = new List<string>();
+    private string? playbackUrl; 
+    private string? streamKey;
+
+    private async Task StartAsync()
+    {
+        Settings =  await LivepeerStartStream.StartLiveStreamAsync();
+
+        // Retrieve properties from Settings --> StreamResponse.cs
+        playbackUrl = Settings[0];
+        streamKey = Settings[1];
+
+
+    }
+}
